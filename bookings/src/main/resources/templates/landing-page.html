@@ -16,6 +16,7 @@
         <div>
             Country: 
             <select name="country">
+                <option></option>
                 <option
                     th:each="country:${countries}"
                     th:value="${country}"
@@ -23,6 +24,8 @@
                 </option>
             </select>
         </div>
+
+        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
 
         <div>
             <label for "numPersons">Number of Persons: </label>
@@ -33,11 +36,18 @@
 
         <div>
             Price Range: 
+
             <label for "minPrice">Min: </label>
             <input type="number" name="minPrice" th:field="*{minPrice}">
 
+            <div th:if="${#fields.hasErrors('minPrice')}" th:errors="*{minPrice}"></div>
+
+
             <label for "maxPrice">Max: </label>
             <input type="number" name="maxPrice" th:field="*{maxPrice}"> 
+
+            <div th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}"></div>
+
         </div>
 
         <button type="submit">Search</button>

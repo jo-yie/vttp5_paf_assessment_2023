@@ -21,7 +21,7 @@ public class ListingsController {
 	@Autowired
 	private ListingsService listingsService; 
 
-	//TODO: Task 2
+	// Task 2
 	@GetMapping("")
 	// @ResponseBody
 	public String getLandingPage(Model model) {
@@ -39,9 +39,12 @@ public class ListingsController {
 	@GetMapping("/search")
 	public String getSearchResults(@Valid @ModelAttribute SearchObject searchObject, BindingResult bindingResult, Model model) {
 
-		if (bindingResult.hasErrors()) {
+		model.addAttribute("countries", listingsService.getAllCountries());
+
+		if (bindingResult.hasErrors() ) {
 			return "landing-page";
-		}
+
+		} 
 
 		return null;
 		

@@ -21,7 +21,7 @@ public class ListingsRepository {
 
 	//TODO: Task 2
 	// db.listings.aggregate([
-	// 	{ $match : { 'address.country' : { $ne : null } } },
+	// 	{ $match : { 'address.country' : { $ne : null, $ne : "" } } },
 	// 	{ 
 	// 		$group : {
 	// 			_id : '$address.country'
@@ -31,7 +31,7 @@ public class ListingsRepository {
 	public List<Document> getAllCountries() {
 
 		Criteria criteria = Criteria.where(Constants.F_COUNTRY)
-			.ne(null);	
+			.ne(null).ne("");	
 
 		MatchOperation matchOperation = Aggregation.match(criteria);
 
