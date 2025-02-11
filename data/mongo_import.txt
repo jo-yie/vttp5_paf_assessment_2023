@@ -1,0 +1,5 @@
+TASK 1 
+
+1. Import listing.json into mongo database, collection: listings
+
+mongoimport --host=localhost --port=27017 --db=paf_assessment_2023 --collection=listings --type=json --file=listings.json

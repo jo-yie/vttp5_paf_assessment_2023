@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+</head>
+<body>
+
+    <h1>landing-page.html</h1>
+
+    <form method="GET"
+        th:action="@{/search}"
+        th:object="${searchObject}">
+
+        <div>
+            Country: 
+            <select name="country">
+                <option
+                    th:each="country:${countries}"
+                    th:value="${country}"
+                    th:text="${country}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for "numPersons">Number of Persons: </label>
+            <input type="number" name="numPersons" th:field="*{numPersons}">
+        </div>
+
+        <div th:if="${#fields.hasErrors('numPersons')}" th:errors="*{numPersons}"></div>
+
+        <div>
+            Price Range: 
+            <label for "minPrice">Min: </label>
+            <input type="number" name="minPrice" th:field="*{minPrice}">
+
+            <label for "maxPrice">Max: </label>
+            <input type="number" name="maxPrice" th:field="*{maxPrice}"> 
+        </div>
+
+        <button type="submit">Search</button>
+
+    </form>
+    
+</body>
+</html>
