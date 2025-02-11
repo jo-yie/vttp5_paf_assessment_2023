@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.validation.Valid;
+import vttp2023.batch3.assessment.paf.bookings.models.Listing;
 import vttp2023.batch3.assessment.paf.bookings.models.SearchObject;
 import vttp2023.batch3.assessment.paf.bookings.services.ListingsService;
 
@@ -35,8 +36,9 @@ public class ListingsController {
 
 	}
 
-	//TODO: Task 3
+	// Task 3
 	@GetMapping("/search")
+	// @ResponseBody
 	public String getSearchResults(@Valid @ModelAttribute SearchObject searchObject, BindingResult bindingResult, Model model) {
 
 		model.addAttribute("countries", listingsService.getAllCountries());
@@ -46,7 +48,17 @@ public class ListingsController {
 
 		} 
 
-		return null;
+		model.addAttribute("country", searchObject.getCountry());
+
+		List<Listing> listings = listingsService.searchForListings(searchObject);
+		if (listings == null || listings.isEmpty()) {
+			return "no-listings";
+
+		}
+
+		model.addAttribute("listings", listings); 
+
+		return "listings";
 		
 	}
 

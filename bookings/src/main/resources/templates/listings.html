@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listings</title>
+</head>
+<body>
+
+    <h1>listings.html</h1>
+
+    <h1>Listings for <span th:text="${country}"></span></h1>
+
+    <form th:action="@{/}">
+        <button th:action="@{/}" type="submit">Back</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="listing : ${listings}">
+                <td th:text="${listing.name}"></td>
+                <td th:text="${listing.price}"></td>
+                <td><image th:src="${listing.imageUrl}" style="max-width:300px"></image></td>
+                <td><button>Details</button></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>

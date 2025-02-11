@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Listings Found</title>
+</head>
+<body>
+
+    <h1>no-listings.html</h1>
+
+    <h1>No Listings Found for <span th:text="${country}"></span></h1>
+
+    <form th:action="@{/}">
+        <button th:action="@{/}" type="submit">Back</button>
+    </form>
+    
+</body>
+</html>
