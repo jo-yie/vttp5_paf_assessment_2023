@@ -2,11 +2,18 @@ package vttp2023.batch3.assessment.paf.bookings.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.management.RuntimeErrorException;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import vttp2023.batch3.assessment.paf.bookings.exceptions.AccommodationErrorException;
+import vttp2023.batch3.assessment.paf.bookings.models.Booking;
 import vttp2023.batch3.assessment.paf.bookings.models.Listing;
 import vttp2023.batch3.assessment.paf.bookings.models.ListingDetail;
 import vttp2023.batch3.assessment.paf.bookings.models.SearchObject;
@@ -69,7 +76,7 @@ public class ListingsService {
 
 	}
 
-	//TODO: Task 4
+	// Task 4
 	public ListingDetail test(String listing_id) {
 
 		Document d = listingsRepository.getListingDetail(listing_id);
@@ -97,6 +104,38 @@ public class ListingsService {
 	}
 
 	//TODO: Task 5
+	@Transactional
+	public void insertBooking(Booking booking) {
 
+		try { 
+			// add booking to reservations table 
+			listingsRepository.insertBooking(booking);
+
+			// deduct duration of stay from acc_occupancy 
+			listingsRepository.updateVacancy(booking);
+		} catch (Exception e) {
+
+			throw new RuntimeException();
+
+		}
+
+
+	}
+
+	// Task 5 helper method 
+	// check stay < vacancy
+	public boolean checkVacancy(Booking booking) {
+
+		int vacancy = listingsRepository.getVacancy(booking.getAccommodationId());
+
+		if (booking.getStay() > vacancy) {
+			return false;
+
+		} else {
+			return true;
+
+		}
+
+	}
 
 }

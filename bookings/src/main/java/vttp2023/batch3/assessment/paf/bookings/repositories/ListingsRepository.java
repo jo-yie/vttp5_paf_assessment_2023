@@ -2,6 +2,7 @@ package vttp2023.batch3.assessment.paf.bookings.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.tomcat.util.bcel.Const;
 import org.apache.tomcat.util.bcel.classfile.Constant;
@@ -17,13 +18,19 @@ import org.springframework.data.mongodb.core.aggregation.SetOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+
+import vttp2023.batch3.assessment.paf.bookings.models.Booking;
 
 @Repository
 public class ListingsRepository {
 
 	@Autowired
 	private MongoTemplate template;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	// Task 2
 	// db.listings.aggregate([
@@ -97,7 +104,7 @@ public class ListingsRepository {
 
 	}
 
-	//TODO: Task 4
+	// Task 4
 	// db.listings.aggregate([
 	// 	{
 	// 		$match : { _id : "10108388" }
@@ -149,6 +156,40 @@ public class ListingsRepository {
 	}
 
 	//TODO: Task 5
+	public int insertBooking(Booking b) {
+
+		return jdbcTemplate.update(Queries.SQL_INSERT_BOOKING, 
+			b.getBookingId(),
+			b.getName(),
+			b.getEmail(), 
+			b.getAccommodationId(), 
+			b.getArrival(), 
+			b.getStay()); 
+
+	}
+
+	public int updateVacancy(Booking b) {
+
+		return jdbcTemplate.update(Queries.SQL_UPDATE_VACANCY,
+			b.getStay(),
+			b.getAccommodationId());
+
+	}
+
+	// Task 5 helper method 
+	public Integer getVacancy(String accommodationId) {
+
+		SqlRowSet rs =jdbcTemplate.queryForRowSet(Queries.SQL_GET_VACANCY, accommodationId);
+
+		Integer vacancy = null;
+
+		if (rs.next()) {
+			vacancy = rs.getInt("vacancy");
+		} 
+
+		return vacancy;
+
+	}
 
 
 }

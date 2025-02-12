@@ -59,6 +59,9 @@
         th:action="@{/book}"
         th:object="${booking}">
 
+        <!-- Hidden field for accommodation ID -->
+        <input type="hidden" name="accommodationId" th:value="*{accommodationId}">
+
         <div>
             <label for "name">Name: </label>
             <input type="text" name="numPersons" th:field="*{name}" placeholder="Your name">
@@ -79,6 +82,8 @@
             <input type="number" name="stay" th:field="*{stay}">
             days
         </div>
+
+        <div th:if="${#fields.hasErrors('stay')}" th:errors="*{stay}"></div>
 
         <button type="submit">Book</button>
 
