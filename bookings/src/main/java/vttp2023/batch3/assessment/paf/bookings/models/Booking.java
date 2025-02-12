@@ -1,7 +1,6 @@
 package vttp2023.batch3.assessment.paf.bookings.models;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Booking {
     

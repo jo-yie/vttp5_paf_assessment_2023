@@ -11,6 +11,10 @@
 
     <h1>Your Booking was Unsuccessful :(</h1>
 
+    <div>
+        <h2>Error: <span th:text="${errorMessage}"></span></h2>
+    </div>
+    
     <a th:href="@{/}" class="button">Back</a>
     
 </body>

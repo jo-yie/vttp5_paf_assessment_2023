@@ -3,8 +3,6 @@ package vttp2023.batch3.assessment.paf.bookings.models;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 public class SearchObject {
 
@@ -55,16 +53,5 @@ public class SearchObject {
     public void setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
     }
-
-    // public boolean validPriceRange() {
-
-    //     if (maxPrice > minPrice) {
-    //         return true;
-
-    //     }
-
-    //     return false;
-
-    // }
     
 }

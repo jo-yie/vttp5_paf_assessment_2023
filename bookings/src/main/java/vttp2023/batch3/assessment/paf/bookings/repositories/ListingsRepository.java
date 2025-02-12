@@ -1,11 +1,7 @@
 package vttp2023.batch3.assessment.paf.bookings.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.tomcat.util.bcel.Const;
-import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -155,7 +151,7 @@ public class ListingsRepository {
 
 	}
 
-	//TODO: Task 5
+	// Task 5
 	public int insertBooking(Booking b) {
 
 		return jdbcTemplate.update(Queries.SQL_INSERT_BOOKING, 

@@ -3,9 +3,6 @@ package vttp2023.batch3.assessment.paf.bookings.controllers;
 import java.util.List;
 import java.util.UUID;
 
-import javax.naming.Binding;
-
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -33,7 +28,6 @@ public class ListingsController {
 
 	// Task 2
 	@GetMapping("")
-	// @ResponseBody
 	public String getLandingPage(Model model) {
 
 		model.addAttribute("countries", listingsService.getAllCountries());
@@ -47,7 +41,6 @@ public class ListingsController {
 
 	// Task 3
 	@GetMapping("/search")
-	// @ResponseBody
 	public String getSearchResults(@Valid @ModelAttribute SearchObject searchObject, BindingResult bindingResult, Model model, HttpSession session) {
 
 		model.addAttribute("countries", listingsService.getAllCountries());
@@ -75,7 +68,6 @@ public class ListingsController {
 
 	// Task 4
 	@GetMapping("/listing/{listing_id}")
-	// @ResponseBody
 	public String getListingDetail(@PathVariable String listing_id, Model model, HttpSession session) {
 
 		ListingDetail listingDetail = listingsService.test(listing_id);
@@ -97,7 +89,7 @@ public class ListingsController {
 
 	}
 
-	//TODO: Task 5
+	// Task 5
 	@PostMapping("/book")
 	public String postBooking(@Valid @ModelAttribute Booking booking, BindingResult bindingResult, HttpSession session, Model model) {
 
