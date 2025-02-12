@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing</title>
+</head>
+<body>
+
+    <h1>listing.html</h1>
+
+    <a 
+        th:href="@{/search(country=${s.getCountry()}, numPersons=${s.getNumPersons()}, minPrice=${s.getMinPrice()}, maxPrice=${s.getMaxPrice()})}" 
+        class="button">
+        Back
+    </a>
+
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td th:text="${listingDetail.accommodationId}"></td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td>
+                <image th:src="${listingDetail.imageUrl}" style="max-width:300px"></image>
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td th:text="${listingDetail.description}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>
+                <ul>
+                    <li th:each="address : ${listingDetail.address}" th:text="${address}"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td th:text="${listingDetail.price}"></td>
+        </tr>
+        <tr>
+            <td>Amenities</td>
+            <td>
+                <ul>
+                    <li th:each="amenity : ${listingDetail.amenities}" th:text="${amenity}"></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+
+    <h1>Bookings</h1>
+
+    <form method="POST"
+        th:action="@{/book}"
+        th:object="${booking}">
+
+        <div>
+            <label for "name">Name: </label>
+            <input type="text" name="numPersons" th:field="*{name}" placeholder="Your name">
+        </div>
+
+        <div>
+            <label for "email">Email: </label>
+            <input type="email" name="email" th:field="*{email}" placeholder="Your email">
+        </div>
+
+        <div>
+            <label for "arrival">Arrival: </label>
+            <input type="date" name="arrival" th:field="*{arrival}">
+        </div>
+
+        <div>
+            <label for "stay">Stay: </label>
+            <input type="number" name="stay" th:field="*{stay}">
+            days
+        </div>
+
+        <button type="submit">Book</button>
+
+    </form>
+
+</body>
+</html>

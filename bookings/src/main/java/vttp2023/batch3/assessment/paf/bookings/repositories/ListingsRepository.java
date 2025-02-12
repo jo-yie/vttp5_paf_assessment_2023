@@ -1,8 +1,10 @@
 package vttp2023.batch3.assessment.paf.bookings.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tomcat.util.bcel.Const;
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -65,7 +67,7 @@ public class ListingsRepository {
 	// 		$set : { image_url : '$images.picture_url' }
 	// 	},
 	// 	{
-	// 		$project : { _id : 0, name : 1, price : 1, 'image_url' : 1 }
+	// 		$project : { name : 1, price : 1, 'image_url' : 1 }
 	// 	}
 	// ])
 	public List<Document> searchForListings(String country, int numPersons, int minPrice, int maxPrice) {
@@ -86,7 +88,7 @@ public class ListingsRepository {
 			Constants.F_NAME, 
 			Constants.F_PRICE, 
 			"image_url"
-			).andExclude("_id");
+			);
 
 		Aggregation pipeline = Aggregation.newAggregation(
 			matchOperation, sortOperation, setOperation, projectionOperation);
@@ -96,7 +98,55 @@ public class ListingsRepository {
 	}
 
 	//TODO: Task 4
-	
+	// db.listings.aggregate([
+	// 	{
+	// 		$match : { _id : "10108388" }
+	// 	}, 
+	// 	{
+	// 		$set : {
+	// 			address : [ '$address.street', '$address.suburb', '$address.country' ], 
+	// 			image_url : '$images.picture_url'
+	// 		}
+	// 	},
+	// 	{ $project: { description : 1, address : 1, image_url : 1, price : 1, amenities : 1} }
+	// ])
+	public Document getListingDetail(String id) {
+
+		Criteria criteria = Criteria.where(Constants.F_ID).is(id); 
+
+		MatchOperation matchOperation = Aggregation.match(criteria);
+
+		SetOperation setOperation = SetOperation
+			.set("address")
+			.toValue(List.of(
+					Constants.F_STREET, 
+					Constants.F_SUBURB, 
+					Constants.F_COUNTRY_NEW)); 
+		
+		SetOperation setOperation2 = SetOperation
+			.set("image_url")
+			.toValue(Constants.F_IMAGES_PICTURE_URL);
+
+		ProjectionOperation projectionOperation = Aggregation.project(
+			Constants.F_DESCRIPTION, 
+			"address", 
+			"image_url", 
+			Constants.F_PRICE, 
+			Constants.F_AMENITIES
+		);
+
+		Aggregation pipeline = Aggregation.newAggregation(
+			matchOperation, 
+			setOperation, 
+			setOperation2,
+			projectionOperation
+		);
+
+		Document document = template.aggregate(pipeline, Constants.C_LISTINGS, Document.class).getUniqueMappedResult();
+
+		return document; 
+
+	}
 
 	//TODO: Task 5
 

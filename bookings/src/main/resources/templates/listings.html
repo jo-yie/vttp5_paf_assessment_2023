@@ -11,9 +11,7 @@
 
     <h1>Listings for <span th:text="${country}"></span></h1>
 
-    <form th:action="@{/}">
-        <button th:action="@{/}" type="submit">Back</button>
-    </form>
+    <a th:href="@{/}" class="button">Back</a>
 
     <table border="1">
         <thead>
@@ -29,7 +27,7 @@
                 <td th:text="${listing.name}"></td>
                 <td th:text="${listing.price}"></td>
                 <td><image th:src="${listing.imageUrl}" style="max-width:300px"></image></td>
-                <td><button>Details</button></td>
+                <td><a th:href="@{/listing/{id}(id=${listing.id})}" class="button">Details</a></td>
             </tr>
         </tbody>
     </table>

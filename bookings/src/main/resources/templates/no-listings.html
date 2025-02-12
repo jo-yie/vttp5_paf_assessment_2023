@@ -11,9 +11,7 @@
 
     <h1>No Listings Found for <span th:text="${country}"></span></h1>
 
-    <form th:action="@{/}">
-        <button th:action="@{/}" type="submit">Back</button>
-    </form>
+    <a th:href="@{/}" class="button">Back</a>
     
 </body>
 </html>

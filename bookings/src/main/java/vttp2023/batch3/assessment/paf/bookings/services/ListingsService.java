@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vttp2023.batch3.assessment.paf.bookings.models.Listing;
+import vttp2023.batch3.assessment.paf.bookings.models.ListingDetail;
 import vttp2023.batch3.assessment.paf.bookings.models.SearchObject;
 import vttp2023.batch3.assessment.paf.bookings.repositories.ListingsRepository;
 
@@ -59,6 +60,7 @@ public class ListingsService {
 
 		Listing l = new Listing(); 
 
+		l.setId(doc.getString("_id"));
 		l.setName(doc.getString("name"));
 		l.setPrice(doc.get("price", Number.class).floatValue());
 		l.setImageUrl(doc.getString("image_url"));
@@ -68,7 +70,31 @@ public class ListingsService {
 	}
 
 	//TODO: Task 4
-	
+	public ListingDetail test(String listing_id) {
+
+		Document d = listingsRepository.getListingDetail(listing_id);
+		ListingDetail l = docToListingDetail(d);
+
+		return l;
+
+	}
+
+	// Task 4 helper method 
+	// Document --> ListingDetail POJO
+	public ListingDetail docToListingDetail(Document doc) {
+
+		ListingDetail l = new ListingDetail(); 
+
+		l.setAccommodationId(doc.getString("_id"));
+		l.setDescription(doc.getString("description"));
+		l.setAddress(doc.getList("address", String.class));
+		l.setImageUrl(doc.getString("image_url"));
+		l.setPrice(doc.get("price", Number.class).floatValue());
+		l.setAmenities(doc.getList("amenities", String.class));
+
+		return l;
+
+	}
 
 	//TODO: Task 5
 

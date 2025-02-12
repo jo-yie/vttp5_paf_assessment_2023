@@ -21,7 +21,7 @@ CREATE TABLE reservations (
     email VARCHAR(128), 
     acc_id VARCHAR(10), -- foreign key 
     arrival_date DATE, 
-    DURATION INT, 
+    duration INT, 
     CONSTRAINT pk_resv_id PRIMARY KEY (resv_id),
     CONSTRAINT fk_acc_id 
         FOREIGN KEY (acc_id)
