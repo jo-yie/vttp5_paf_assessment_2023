@@ -17,7 +17,7 @@ public class Queries {
     public static final String SQL_UPDATE_VACANCY = 
     """
         UPDATE acc_occupancy
-            SET vacancy = vacancy - ????
+            SET vacancy = vacancy - ?
             WHERE acc_id = ?
     """;
     
